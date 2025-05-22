@@ -5,7 +5,7 @@
     <div :class="sidebarOpen ? 'translate-x-0 ease-out' : '-translate-x-full ease-in'" class="fixed inset-y-0 left-0 z-30 w-64 overflow-y-auto transition duration-300 transform bg-white dark:bg-gray-800 lg:translate-x-0 lg:static lg:inset-0 border-r border-gray-200 dark:border-gray-700">
         <div class="flex items-center justify-between p-4">
             <a href="{{ route('dashboard') }}" class="flex items-center">
-                <x-application-logo class="block h-9 w-auto fill-current text-gray-800 dark:text-gray-200" />
+                <img src="{{ asset('logo.jpg') }}" alt="Logo" class="w-8 h-8">
                 <span class="ml-2 text-xl font-semibold text-gray-800 dark:text-gray-200">Pencatatan Tamu</span>
             </a>
             <button @click="sidebarOpen = false" class="p-2 rounded-md lg:hidden text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100">
@@ -21,6 +21,13 @@
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path>
                 </svg>
                 <span>{{ __('Dashboard') }}</span>
+            </a>
+
+            <a href="{{ route('laporan') }}" class="flex items-center px-4 py-2 mt-2 text-sm font-semibold {{ request()->routeIs('laporan') ? 'text-gray-900 bg-gray-100 dark:bg-gray-700 dark:text-white' : 'text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700' }} rounded-lg">
+                <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                </svg>
+                <span>{{ __('Laporan') }}</span>
             </a>
         </nav>
     </div>

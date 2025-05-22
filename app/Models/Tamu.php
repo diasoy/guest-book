@@ -26,7 +26,6 @@ class Tamu extends Model
         'instansi',
         'telepon',
         'email',
-        'tujuan',
         'keperluan',
         'image_url',
     ];

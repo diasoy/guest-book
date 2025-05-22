@@ -16,9 +16,22 @@ Route::get('/dashboard', [DashboardController::class, 'index'])
     ->middleware(['auth', 'verified'])
     ->name('dashboard');
 
-Route::get('/tamu', [TamuController::class, 'index'])
+Route::get('/laporan', [DashboardController::class, 'laporan'])
     ->middleware(['auth', 'verified'])
-    ->name('tamu.index');
+    ->name('laporan');
+
+Route::get('/laporan/export', [DashboardController::class, 'exportLaporan'])
+    ->middleware(['auth', 'verified'])
+    ->name('laporan.export');
+
+Route::get('/tamu-details/{id}', [TamuController::class, 'getDetails'])
+    ->middleware(['auth', 'verified'])
+    ->name('tamu.details');
+
+Route::get('/tamu/{tamu}', [TamuController::class, 'detail'])
+    ->middleware(['auth', 'verified'])
+    ->name('admin.detail');
+
 
 
 Route::middleware('auth')->group(function () {

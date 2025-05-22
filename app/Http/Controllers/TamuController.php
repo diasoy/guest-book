@@ -54,7 +54,6 @@ class TamuController extends Controller
             'instansi' => 'nullable|string|max:255',
             'telepon' => 'nullable|string|max:20',
             'email' => 'nullable|email|max:255',
-            'tujuan' => 'required|string|max:255',
             'keperluan' => 'required|string',
             'photo_data' => 'nullable|string',
         ]);
@@ -73,7 +72,6 @@ class TamuController extends Controller
         return redirect()->route('tamu.index')
             ->with('success', 'Data tamu berhasil ditambahkan!');
     }
-
     /**
      * Display the specified resource.
      */
@@ -100,7 +98,6 @@ class TamuController extends Controller
             'instansi' => 'nullable|string|max:255',
             'telepon' => 'nullable|string|max:20',
             'email' => 'nullable|email|max:255',
-            'tujuan' => 'required|string|max:255',
             'keperluan' => 'required|string',
             'photo_data' => 'nullable|string',
         ]);
@@ -111,7 +108,7 @@ class TamuController extends Controller
             if ($tamu->image_url) {
                 Storage::disk('public')->delete($tamu->image_url);
             }
-            
+
             $imageUrl = $this->storeImage($validated['photo_data']);
             $validated['image_url'] = $imageUrl;
         }
@@ -132,7 +129,6 @@ class TamuController extends Controller
             'instansi' => 'nullable|string|max:255',
             'telepon' => 'nullable|string|max:20',
             'email' => 'nullable|email|max:255',
-            'tujuan' => 'required|string|max:255',
             'keperluan' => 'required|string',
             'photo_data' => 'required|string',
         ]);
@@ -181,5 +177,28 @@ class TamuController extends Controller
         Storage::disk('public')->put($filename, $decodedImage);
 
         return $filename;
+    }
+
+    public function getDetails(Tamu $id)
+    {
+        $visitor = $id;
+
+        // Format the image URL
+        if ($visitor->image_url) {
+            $visitor->image_url = Storage::url($visitor->image_url);
+        }
+
+        // Format the date
+        $visitor->created_at = $visitor->created_at->format('d M Y H:i');
+
+        return response()->json($visitor);
+    }
+
+    /**
+     * Show detailed visitor information
+     */
+    public function detail(Tamu $tamu)
+    {
+        return view('admin.detail', compact('tamu'));
     }
 }

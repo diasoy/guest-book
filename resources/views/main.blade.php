@@ -28,7 +28,7 @@
             height: 100%;
             object-fit: cover;
             border-radius: 0.375rem;
-            border: 1px solid #e5e7eb;
+            border: 1px solid #e5e7eb
         }
 
         #photoPreview {
@@ -95,6 +95,7 @@
     <div class="w-full max-w-5xl">
         <!-- Header -->
         <div class="text-center mb-8">
+            <img src="{{ asset('logo.jpg') }}" alt="Logo" class="mx-auto mb-4 w-24 h-24">
             <h1 class="text-3xl font-bold text-gray-800">Selamat Datang</h1>
             <p class="text-gray-600 mt-2">Silakan isi data diri Anda untuk melanjutkan</p>
         </div>
@@ -194,19 +195,6 @@
                                 <label for="email" class="block text-sm font-medium text-gray-700 mb-1">Email</label>
                                 <input type="email" name="email" id="email" value="{{ old('email') }}" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm" placeholder="contoh@email.com">
                             </div>
-                        </div>
-
-                        <!-- Tujuan -->
-                        <div>
-                            <label for="tujuan" class="block text-sm font-medium text-gray-700 mb-1">Tujuan <span class="text-red-600">*</span></label>
-                            <select name="tujuan" id="tujuan" required class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
-                                <option value="" disabled {{ old('tujuan') ? '' : 'selected' }}>Pilih tujuan kunjungan</option>
-                                <option value="Bagian Keuangan" {{ old('tujuan') == 'Bagian Keuangan' ? 'selected' : '' }}>Bagian Keuangan</option>
-                                <option value="Bertemu Direktur" {{ old('tujuan') == 'Bertemu Direktur' ? 'selected' : '' }}>Bertemu Direktur</option>
-                                <option value="Bagian Umum" {{ old('tujuan') == 'Bagian Umum' ? 'selected' : '' }}>Bagian Umum</option>
-                                <option value="Pengadaan" {{ old('tujuan') == 'Pengadaan' ? 'selected' : '' }}>Pengadaan</option>
-                                <option value="Lain-lain" {{ old('tujuan') == 'Lain-lain' ? 'selected' : '' }}>Lain-lain</option>
-                            </select>
                         </div>
 
                         <!-- Keperluan -->

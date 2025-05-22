@@ -64,7 +64,7 @@
             <div class="mt-8 bg-white dark:bg-gray-800 overflow-hidden shadow-sm rounded-lg">
                 <div class="p-6">
                     <h3 class="text-lg font-medium text-gray-800 dark:text-gray-200 mb-4">Data Pengunjung</h3>
-                    
+
                     <!-- Filters -->
                     <div class="flex flex-col md:flex-row justify-between mb-4 space-y-3 md:space-y-0">
                         <div class="flex flex-col md:flex-row gap-3">
@@ -106,45 +106,51 @@
                             <thead class="bg-gray-50 dark:bg-gray-700">
                                 <tr>
                                     <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">No</th>
+                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Foto</th>
                                     <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Nama</th>
-                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Email</th>
-                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Telepon</th>
-                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Tujuan</th>
+                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Instansi</th>
                                     <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Tanggal</th>
                                     <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Aksi</th>
                                 </tr>
                             </thead>
                             <tbody class="bg-white divide-y divide-gray-200 dark:bg-gray-800 dark:divide-gray-700">
                                 @forelse($visitors as $index => $visitor)
-                                    <tr class="{{ $index % 2 == 0 ? '' : 'bg-gray-50 dark:bg-gray-700' }}">
-                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">
-                                            {{ ($visitors->currentPage() - 1) * $visitors->perPage() + $loop->iteration }}
-                                        </td>
-                                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-white">
-                                            {{ $visitor->nama }}
-                                        </td>
-                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">
-                                            {{ $visitor->email }}
-                                        </td>
-                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">
-                                            {{ $visitor->telepon }}
-                                        </td>
-                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">
-                                            {{ $visitor->tujuan }}
-                                        </td>
-                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">
-                                            {{ $visitor->created_at->format('d M Y H:i') }}
-                                        </td>
-                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">
-                                            <a href="#" class="text-indigo-600 hover:text-indigo-900 dark:text-indigo-400 dark:hover:text-indigo-300">Detail</a>
-                                        </td>
-                                    </tr>
+                                <tr class="{{ $index % 2 == 0 ? '' : 'bg-gray-50 dark:bg-gray-700' }}">
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">
+                                        {{ ($visitors->currentPage() - 1) * $visitors->perPage() + $loop->iteration }}
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        @if($visitor->image_url)
+                                        <img src="{{ Storage::url($visitor->image_url) }}" alt="Foto {{ $visitor->nama }}" class="h-12 w-12 rounded-full object-cover">
+                                        @else
+                                        <div class="h-12 w-12 rounded-full bg-gray-200 flex items-center justify-center">
+                                            <svg class="h-6 w-6 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+                                            </svg>
+                                        </div>
+                                        @endif
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-white">
+                                        {{ $visitor->nama }}
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">
+                                        {{ $visitor->instansi ?: '-' }}
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">
+                                        {{ $visitor->created_at->format('d M Y H:i') }}
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-white">
+                                        <a href="{{ route('admin.detail', $visitor) }}" class="hover:text-indigo-700 text-indigo-600 dark:hover:text-indigo-400">
+                                            DETAIL
+                                        </a>
+                                    </td>
+                                </tr>
                                 @empty
-                                    <tr>
-                                        <td colspan="7" class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400 text-center">
-                                            Tidak ada data pengunjung
-                                        </td>
-                                    </tr>
+                                <tr>
+                                    <td colspan="6" class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400 text-center">
+                                        Tidak ada data pengunjung
+                                    </td>
+                                </tr>
                                 @endforelse
                             </tbody>
                         </table>
@@ -159,36 +165,61 @@
         </div>
     </div>
 
-    <!-- JavaScript for filters -->
+    <!-- Modal for Visitor Details -->
+    <div id="visitorDetailModal" class="fixed inset-0 bg-gray-600 bg-opacity-50 hidden overflow-y-auto h-full w-full" style="z-index: 50;">
+        <div class="relative top-20 mx-auto p-5 border w-11/12 md:w-3/4 lg:w-1/2 shadow-lg rounded-md bg-white dark:bg-gray-800">
+            <div class="mt-3">
+                <div class="flex justify-between items-center pb-3 border-b dark:border-gray-700">
+                    <h3 class="text-lg font-medium text-gray-900 dark:text-white" id="modalTitle">Detail Pengunjung</h3>
+                    <button type="button" class="text-gray-400 hover:text-gray-500" onclick="closeModal()">
+                        <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                        </svg>
+                    </button>
+                </div>
+                <div class="p-4" id="visitorDetails">
+                    <!-- Details will be loaded here -->
+                    <div class="flex justify-center">
+                        <svg class="animate-spin h-8 w-8 text-indigo-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript for filters and modal -->
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const periodFilter = document.getElementById('filter-period');
             const perPageFilter = document.getElementById('per-page');
             const searchInput = document.getElementById('search');
-            
+
             // Handle filter changes
             function applyFilters() {
                 const period = periodFilter.value;
                 const perPage = perPageFilter.value;
                 const search = searchInput.value;
-                
+
                 let url = new URL(window.location.href);
                 url.searchParams.set('period', period);
                 url.searchParams.set('perPage', perPage);
-                
+
                 if (search) {
                     url.searchParams.set('search', search);
                 } else {
                     url.searchParams.delete('search');
                 }
-                
+
                 window.location.href = url.toString();
             }
-            
+
             // Add event listeners
             periodFilter.addEventListener('change', applyFilters);
             perPageFilter.addEventListener('change', applyFilters);
-            
+
             // Add debounce for search
             let searchTimeout;
             searchInput.addEventListener('input', function() {
@@ -196,5 +227,78 @@
                 searchTimeout = setTimeout(applyFilters, 500);
             });
         });
+
+        // Visitor details modal functions
+        function showVisitorDetails(id) {
+            document.getElementById('visitorDetailModal').classList.remove('hidden');
+
+            // Fetch visitor details via AJAX
+            fetch(`/visitor-details/${id}`)
+                .then(response => response.json())
+                .then(data => {
+                    let html = `
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div class="text-center">
+                                ${data.image_url 
+                                    ? `<img src="${data.image_url}" alt="Foto ${data.nama}" class="mx-auto h-48 w-48 rounded-lg object-cover">` 
+                                    : `<div class="mx-auto h-48 w-48 rounded-lg bg-gray-200 flex items-center justify-center">
+                                        <svg class="h-24 w-24 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+                                        </svg>
+                                      </div>`
+                                }
+                                <p class="mt-2 text-sm text-gray-500 dark:text-gray-400">Foto Pengunjung</p>
+                            </div>
+                            <div class="space-y-4">
+                                <div>
+                                    <h4 class="text-sm font-medium text-gray-500 dark:text-gray-400">Nama Lengkap</h4>
+                                    <p class="mt-1 text-base text-gray-900 dark:text-white">${data.nama}</p>
+                                </div>
+                                <div>
+                                    <h4 class="text-sm font-medium text-gray-500 dark:text-gray-400">Instansi</h4>
+                                    <p class="mt-1 text-base text-gray-900 dark:text-white">${data.instansi || '-'}</p>
+                                </div>
+                                <div>
+                                    <h4 class="text-sm font-medium text-gray-500 dark:text-gray-400">Kontak</h4>
+                                    <p class="mt-1 text-base text-gray-900 dark:text-white">
+                                        ${data.telepon ? `Tel: ${data.telepon}<br>` : ''}
+                                        ${data.email ? `Email: ${data.email}` : '-'}
+                                    </p>
+                                </div>
+                                <div>
+                                    <h4 class="text-sm font-medium text-gray-500 dark:text-gray-400">Tanggal Kunjungan</h4>
+                                    <p class="mt-1 text-base text-gray-900 dark:text-white">${data.created_at}</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mt-6">
+                            <h4 class="text-sm font-medium text-gray-500 dark:text-gray-400">Keperluan</h4>
+                            <p class="mt-1 text-base text-gray-900 dark:text-white whitespace-pre-line">${data.keperluan}</p>
+                        </div>
+                    `;
+
+                    document.getElementById('visitorDetails').innerHTML = html;
+                })
+                .catch(error => {
+                    console.error('Error fetching visitor details:', error);
+                    document.getElementById('visitorDetails').innerHTML = `
+                        <div class="text-center text-red-500">
+                            Terjadi kesalahan saat memuat data pengunjung. Silakan coba lagi.
+                        </div>
+                    `;
+                });
+        }
+
+        function closeModal() {
+            document.getElementById('visitorDetailModal').classList.add('hidden');
+        }
+
+        // Close modal when clicking outside the content
+        window.onclick = function(event) {
+            const modal = document.getElementById('visitorDetailModal');
+            if (event.target === modal) {
+                closeModal();
+            }
+        }
     </script>
 </x-app-layout>
