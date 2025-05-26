@@ -16,23 +16,6 @@ class TamuSeeder extends Seeder
     {
         $faker = Faker::create('id_ID');
 
-        $purposes = [
-            'Meeting dengan direktur',
-            'Interview kerja',
-            'Konsultasi dengan HRD',
-            'Pengajuan kerjasama',
-            'Pengiriman dokumen',
-            'Kunjungan rutin',
-            'Rapat dengan tim marketing',
-            'Presentasi produk',
-            'Pertemuan dengan investor',
-            'Pelatihan karyawan',
-            'Audit internal',
-            'Pengambilan berkas',
-            'Service peralatan kantor',
-            'Wawancara media',
-            'Kunjungan vendor'
-        ];
 
         for ($i = 0; $i < 100; $i++) {
             $year = rand(2020, 2025);
@@ -50,7 +33,6 @@ class TamuSeeder extends Seeder
                 'email' => $faker->email,
                 'instansi' => $faker->company,
                 'telepon' => $faker->phoneNumber,
-                'tujuan' => $faker->randomElement($purposes),
                 'keperluan' => $faker->text(200),
                 'created_at' => $date,
                 'updated_at' => $date,
