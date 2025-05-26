@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ config('app.name', 'Pencatatan Tamu') }}</title>
+    <link rel="icon" href="{{ asset('logo.jpg') }}" type="image/x-icon">
 
     <link rel="preconnect" href="https://fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
@@ -240,7 +241,6 @@
 
             @if(session('success'))
             document.querySelector('form').reset();
-            // Reset camera preview
             photoPreview.style.display = 'none';
             retakeButton.style.display = 'none';
             startButton.style.display = 'inline-flex';
