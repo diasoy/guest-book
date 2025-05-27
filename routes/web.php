@@ -28,11 +28,9 @@ Route::get('/tamu-details/{id}', [TamuController::class, 'getDetails'])
     ->middleware(['auth', 'verified'])
     ->name('tamu.details');
 
-Route::get('/tamu/{tamu}', [TamuController::class, 'detail'])
+Route::resource('tamu', TamuController::class)
     ->middleware(['auth', 'verified'])
-    ->name('admin.detail');
-
-
+    ->names('admin.tamu');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

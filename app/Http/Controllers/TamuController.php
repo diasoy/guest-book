@@ -77,7 +77,7 @@ class TamuController extends Controller
      */
     public function show(Tamu $tamu)
     {
-        return view('tamu.show', compact('tamu'));
+        return view('admin.tamu.show', compact('tamu'));
     }
 
     /**
@@ -85,7 +85,7 @@ class TamuController extends Controller
      */
     public function edit(Tamu $tamu)
     {
-        return view('tamu.edit', compact('tamu'));
+        return view('admin.tamu.edit', compact('tamu'));
     }
 
     /**
@@ -99,7 +99,7 @@ class TamuController extends Controller
             'telepon' => 'nullable|string|max:20',
             'email' => 'nullable|email|max:255',
             'keperluan' => 'required|string',
-            'photo_data' => 'nullable|string',
+            'photo_data' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048', // validasi file gambar
         ]);
 
         // Handle image if provided
@@ -109,16 +109,13 @@ class TamuController extends Controller
                 Storage::disk('public')->delete($tamu->image_url);
             }
 
-            $imageUrl = $this->storeImage($validated['photo_data']);
+            $imageUrl = $request->file('photo_data')->store('visitor_photos', 'public');
             $validated['image_url'] = $imageUrl;
         }
 
-        // Remove photo_data from validated data before updating
-        unset($validated['photo_data']);
-
         $tamu->update($validated);
 
-        return redirect()->route('tamu.index')
+        return redirect()->route('dashboard')
             ->with('success', 'Data tamu berhasil diperbarui!');
     }
 
@@ -157,7 +154,7 @@ class TamuController extends Controller
 
         $tamu->delete();
 
-        return redirect()->route('tamu.index')
+        return redirect()->route('dashboard')
             ->with('success', 'Data tamu berhasil dihapus!');
     }
 
@@ -182,7 +179,6 @@ class TamuController extends Controller
     public function getDetails(Tamu $id)
     {
         $visitor = $id;
-
         // Format the image URL
         if ($visitor->image_url) {
             $visitor->image_url = Storage::url($visitor->image_url);
@@ -197,8 +193,5 @@ class TamuController extends Controller
     /**
      * Show detailed visitor information
      */
-    public function detail(Tamu $tamu)
-    {
-        return view('admin.detail', compact('tamu'));
-    }
+
 }
