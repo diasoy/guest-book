@@ -3,7 +3,7 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="mb-4 flex justify-between items-center">
                 <h2 class="text-xl font-semibold text-gray-800 dark:text-gray-200">Detail Pengunjung</h2>
-                <a href="{{ url()->previous() }}"
+                <a href="{{ route('dashboard') }}"
                     class="inline-flex items-center px-4 py-2 bg-gray-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:ring ring-gray-300 disabled:opacity-25 transition ease-in-out duration-150">
                     <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -20,18 +20,18 @@
                         <div class="text-center">
                             <div class="mb-4">
                                 @if ($tamu->image_url)
-                                    <img src="{{ Storage::url($tamu->image_url) }}" alt="Foto {{ $tamu->nama }}"
-                                        class="mx-auto h-64 w-64 object-cover rounded-lg shadow-md">
+                                <img src="{{ Storage::url($tamu->image_url) }}" alt="Foto {{ $tamu->nama }}"
+                                    class="mx-auto h-64 w-64 object-cover rounded-lg shadow-md">
                                 @else
-                                    <div
-                                        class="mx-auto h-64 w-64 rounded-lg bg-gray-200 flex items-center justify-center shadow-md">
-                                        <svg class="h-32 w-32 text-gray-400" fill="none" stroke="currentColor"
-                                            viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                                d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z">
-                                            </path>
-                                        </svg>
-                                    </div>
+                                <div
+                                    class="mx-auto h-64 w-64 rounded-lg bg-gray-200 flex items-center justify-center shadow-md">
+                                    <svg class="h-32 w-32 text-gray-400" fill="none" stroke="currentColor"
+                                        viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z">
+                                        </path>
+                                    </svg>
+                                </div>
                                 @endif
                                 <p class="mt-2 text-sm text-gray-500 dark:text-gray-400">Foto Pengunjung</p>
                             </div>
@@ -56,7 +56,8 @@
                                             <h4 class="text-sm font-medium text-gray-500 dark:text-gray-400">Instansi
                                             </h4>
                                             <p class="mt-1 text-base text-gray-900 dark:text-white">
-                                                {{ $tamu->instansi ?: '-' }}</p>
+                                                {{ $tamu->instansi ?: '-' }}
+                                            </p>
                                         </div>
                                     </div>
                                 </div>
@@ -69,13 +70,15 @@
                                             <h4 class="text-sm font-medium text-gray-500 dark:text-gray-400">Nomor
                                                 Telepon</h4>
                                             <p class="mt-1 text-base text-gray-900 dark:text-white">
-                                                {{ $tamu->telepon ?: '-' }}</p>
+                                                {{ $tamu->telepon ?: '-' }}
+                                            </p>
                                         </div>
 
                                         <div>
                                             <h4 class="text-sm font-medium text-gray-500 dark:text-gray-400">Email</h4>
                                             <p class="mt-1 text-base text-gray-900 dark:text-white">
-                                                {{ $tamu->email ?: '-' }}</p>
+                                                {{ $tamu->email ?: '-' }}
+                                            </p>
                                         </div>
                                     </div>
                                 </div>
@@ -89,14 +92,14 @@
                                         <h4 class="text-sm font-medium text-gray-500 dark:text-gray-400">Tanggal & Waktu
                                         </h4>
                                         <p class="mt-1 text-base text-gray-900 dark:text-white">
-                                            {{ $tamu->created_at->format('d F Y, H:i') }} WIB</p>
+                                            {{ $tamu->created_at->format('d F Y, H:i') }} WIB
+                                        </p>
                                     </div>
 
                                     <div>
-                                        <h4 class="text-sm font-medium text-gray-500 dark:text-gray-400">Keperluan</h4>
-                                        <div class="mt-1 p-4 bg-gray-50 dark:bg-gray-700 rounded-md">
-                                            <p class="text-base text-gray-900 dark:text-white whitespace-pre-line">
-                                                {{ $tamu->keperluan }}</p>
+                                        <h4 class="text-sm font-medium text-gray-500 dark:text-gray-100">Keperluan</h4>
+                                        <div class="mt-1 p-4 bg-gray-50 dark:bg-gray-700 rounded-md text-white dark:text-gray-200">
+                                            {{ $tamu->keperluan }}
                                         </div>
                                     </div>
                                 </div>
@@ -122,31 +125,31 @@
     </div>
 
     @if (request('print'))
-        <script>
-            window.onload = function() {
-                window.print();
+    <script>
+        window.onload = function() {
+            window.print();
+        }
+    </script>
+    <style>
+        @media print {
+
+            header,
+            nav,
+            footer,
+            .no-print {
+                display: none !important;
             }
-        </script>
-        <style>
-            @media print {
 
-                header,
-                nav,
-                footer,
-                .no-print {
-                    display: none !important;
-                }
-
-                body {
-                    padding: 0;
-                    margin: 0;
-                }
-
-                .py-6 {
-                    padding-top: 0 !important;
-                    padding-bottom: 0 !important;
-                }
+            body {
+                padding: 0;
+                margin: 0;
             }
-        </style>
+
+            .py-6 {
+                padding-top: 0 !important;
+                padding-bottom: 0 !important;
+            }
+        }
+    </style>
     @endif
 </x-app-layout>
