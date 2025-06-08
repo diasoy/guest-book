@@ -184,8 +184,8 @@ class TamuController extends Controller
             $visitor->image_url = Storage::url($visitor->image_url);
         }
 
-        // Format the date
-        $visitor->created_at = $visitor->created_at->format('d M Y H:i');
+        // Format the date with WIB timezone
+        $visitor->created_at = $visitor->created_at->setTimezone('Asia/Jakarta')->format('d M Y H:i') . ' WIB';
 
         return response()->json($visitor);
     }
@@ -193,5 +193,4 @@ class TamuController extends Controller
     /**
      * Show detailed visitor information
      */
-
 }
